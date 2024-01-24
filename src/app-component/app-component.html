@@ -3,7 +3,6 @@
 
 <template>
   <section>
-    <audio ref:audio />
     <e:if test={#isActive === false}>
       <div class="form">
         <label>
@@ -20,7 +19,7 @@
         <e:for-each select={#calls}>
           <li value={@key}>
             <div>{@key}: { @value.peer }</div>
-            <audio use:addSrc={@value.stream}></audio>
+            <audio use:addSrc={@value.stream} autoplay></audio>
             <hr />
           </li>
         </e:for-each>
