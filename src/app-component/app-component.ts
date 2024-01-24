@@ -6,7 +6,6 @@ interface AppComponentState {
 	calls: MediaStream[];
 	incoming: MediaStream | null;
 	localStream: MediaStream;
-	isActive: boolean;
 	mic: boolean;
 }
 
@@ -16,7 +15,6 @@ export function state(): AppComponentState {
 		calls: [],
 		incoming: null,
 		localStream: null,
-		isActive: false,
 		mic: true,
 	};
 }
@@ -81,7 +79,6 @@ export function handleCall(id: string, component: AppComponent) {
 			calls: [...component.state.calls, { peer: call.peer, stream: stream }],
 		});
 	});
-	component.setState({ isActive: true });
 	call.on("close", () => {
 		const i = component.state.calls.findIndex((el) => el.peer === call.peer);
 		component.setState({
@@ -94,19 +91,16 @@ export function handleCall(id: string, component: AppComponent) {
 }
 
 export function handleAnswer(component: AppComponent) {
-	component.state.incoming.answer(component.state.localStream);
-	component.state.incoming.on("stream", (stream: MediaStream) => {
+	const call = component.state.incoming;
+	call.answer(component.state.localStream);
+	call.on("stream", (stream: MediaStream) => {
 		component.setState({
-			calls: [
-				...component.state.calls,
-				{ peer: component.state.incoming.peer, stream: stream },
-			],
+			calls: [...component.state.calls, { peer: call.peer, stream: stream }],
 		});
 		component.setState({ incoming: null });
 	});
-	component.setState({ isActive: true });
 	if (component.state.calls.length > 0) {
-		let conn = component.state.peer.connect(component.state.incoming.peer);
+		let conn = component.state.peer.connect(call.peer);
 		conn.on("open", () => {
 			const peers = component.state.calls.map((c) => c.peer);
 			conn.send(peers);
@@ -116,10 +110,8 @@ export function handleAnswer(component: AppComponent) {
 			conn = null;
 		});
 	}
-	component.state.incoming.on("close", () => {
-		const i = component.state.calls.findIndex(
-			(el) => el.peer === component.state.incoming.peer,
-		);
+	call.on("close", () => {
+		const i = component.state.calls.findIndex((el) => el.peer === call.peer);
 		component.setState({
 			calls: [
 				...component.state.calls.slice(0, i),

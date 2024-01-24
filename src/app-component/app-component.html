@@ -3,7 +3,7 @@
 
 <template>
   <section>
-    <e:if test={#isActive === false}>
+    <e:if test={#calls.length === 0}>
       <div class="form">
         <label>
           Your name:
@@ -14,9 +14,9 @@
         </button>
       </div>
     </e:if>
-    <e:if test={#isActive === true}>
+    <e:if test={#calls.length > 0}>
       <ul class="peers">
-        <e:for-each select={#calls}>
+        <e:for-each select={#calls} key={@value.peer}>
           <li value={@key}>
             <div>{@key}: { @value.peer }</div>
             <audio use:addSrc={@value.stream} autoplay></audio>
