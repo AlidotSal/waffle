@@ -1,0 +1,105 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  color: #f9f9f9;
+  background: #252525;
+  width: 100%;
+  height: 100%;
+}
+
+h1,
+h2,
+h3,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: inline-block;
+  max-width: 100%;
+}
+
+ul {
+  margin: 0;
+  padding: 1em 0.5em;
+  list-style: none;
+  height: 65%;
+  font-size: 2rem;
+}
+
+section {
+  display: grid;
+  contain: paint;
+  height: 100dvh;
+  grid-template-rows: 5fr 1fr;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  margin: auto;
+  font-size: 1.5rem;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0 2em;
+  padding-block: 2em;
+  font-size: 1.25rem;
+  background: rgb(22 22 22);
+  outline: 2px solid rgb(255 255 255);
+  transition: all 0.2s;
+}
+
+button {
+  padding: 1em;
+  cursor: pointer;
+  width: 5em;
+  height: 5em;
+  border-radius: 50%;
+  border: none;
+  background: #c41a1a;
+  color: inherit;
+  box-shadow: 0 0 5px rgb(0 0 0 / 65%);
+  transition: all 0.2s;
+}
+
+.join {
+  background: #4bd664;
+}
+
+.hang-up {
+  background: #ed3939;
+}
+
+button.selected {
+  color: rgb(0 0 0 / 90%);
+  background: #1de99b;
+}
+
+input {
+  width: 6em;
+  padding: 0.25em;
+  font-size: inherit;
+  border-radius: 0.25em;
+  border: none;
+}

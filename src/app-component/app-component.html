@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="./app-component.scss" />
+<script src="./app-component.ts"></script>
+
+<template>
+  <section>
+    <audio ref:audio />
+    <e:if test={#isActive === false}>
+      <div class="form">
+        <label>
+          Your name:
+          <input type="text" on:change={handleName} />
+        </label>
+        <button class="join" on:click={handleCall("Ali")}>
+          Join
+        </button>
+      </div>
+    </e:if>
+    <e:if test={#isActive === true}>
+      <ul class="peers">
+        <e:for-each select={#calls}>
+          <li value={@key}>
+            <div>{@key}: { @value.peer }</div>
+            <audio use:addSrc={@value.stream}></audio>
+            <hr />
+          </li>
+        </e:for-each>
+      </ul>
+      <div class="buttons">
+        <button class="mute" class:selected={#mic == true} on:click={toggleMic}>
+          <img src="./images/mic.svg" />
+        </button>
+        <button class="hang-up" on:click={handleHangUp}>
+          <img src="./images/red-close-circle.svg" />
+        </button>
+      </div>
+    </e:if>
+  </section>
+</template>
